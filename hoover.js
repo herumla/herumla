@@ -52,8 +52,8 @@ var room = {
 	},
 	isDirtPatch: function( hoover_position ) {
 
-		//loop through all the dirt patches and remove the dirt patch once the hover position == dirt patch position and return true
-		//else return false
+		//loop through all the dirt patches to check if the current hoover position == dirt patch position
+		//if yes, remove the dirt patch and return true
 		//assumption is that one dirt patch only shows up once in the file
 		for(var i = 0; i < this.dirt_patches.length; i++) {
 
@@ -77,20 +77,18 @@ var game = {
 		//Before any movement, check if initial hoover position has dirt patch
 		if ( room.isDirtPatch( hoover.getCurrentPosition() ) ) {
 			hoover.dirt_patches_cleaned++;
-			//console.log("Dirt Count Incremented to " + hoover.dirt_patches_cleaned + " as picked up dirt at  " + hoover.getCurrentPosition().x + " " + hoover.getCurrentPosition().y);
 
 		}	
 
-		//loop through the movement directions and move_hoover
+		//loop through each of the movement directions and move_hoover
 		for(const direction of this.movement_directions) {
 
 			hoover.move_hoover(direction, room.dimensions);
-			//console.log("Hoover moved " + direction +" and now is at position " + hoover.getCurrentPosition().x + " " + hoover.getCurrentPosition().y);
 
+			//after moving the hoover, check if there is a dirt patch at it's current position
+			//if so, dirt patch will be cleaned
 			if ( room.isDirtPatch( hoover.getCurrentPosition() ) ) {
 				hoover.dirt_patches_cleaned++;
-				//console.log("Dirt Count Incremented to " + hoover.dirt_patches_cleaned + " as picked up dirt at  " + hoover.getCurrentPosition().x + " " + hoover.getCurrentPosition().y);
-
 			}	
 		}
 		//Game over
